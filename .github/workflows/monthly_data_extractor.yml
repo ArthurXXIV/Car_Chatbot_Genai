@@ -5,6 +5,9 @@ on:
     - cron: '0 0 1 * *'  # Run on the 1st of every month at 00:00 UTC
   workflow_dispatch:
 
+permissions:
+  contents: write  # Allow write access to push commits
+
 jobs:
   run-data-extractor:
     runs-on: ubuntu-latest
@@ -35,4 +38,9 @@ jobs:
         run: |
           git add data/output.csv
           git commit -m "Add extracted CSV for month $(date +'%Y-%m')" || echo "No changes to commit"
+          
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           git push
