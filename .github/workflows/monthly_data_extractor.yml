@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: Run data extractor script
-        run: python data_extractor.py
+        run: python data/data_extractor.py
 
       - name: Configure Git
         run: |
