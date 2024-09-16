@@ -2,8 +2,7 @@ import re
 import json
 import logging
 import pandas as pd
-from tqdm.notebook import tqdm
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -70,6 +69,7 @@ def feature_extract(df, feature):
 if __name__ == '__main__':
     options = webdriver.ChromeOptions()
     # options.add_argument('--start-maximized')
+    options.add_argument("--log-level=3")
     options.add_argument('--headless')
     driver = webdriver.Chrome(options=options)
 
