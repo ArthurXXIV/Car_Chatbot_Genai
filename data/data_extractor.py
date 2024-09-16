@@ -270,4 +270,6 @@ if __name__ == '__main__':
         df[feature] = feature_extract(df, re.escape(feature))
     df.drop('Features', axis=1, inplace=True)
 
-    df.to_csv('car_data.csv', index=False)
+    # df.to_csv('car_data.csv', index=False)
+    df.to_csv('data/output.csv', index=False)
+
