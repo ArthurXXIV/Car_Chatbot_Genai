@@ -227,48 +227,48 @@ if __name__ == '__main__':
         'Features': features
     })
 
-    df['Fuel Type'] = df['Details'].str.extract(r'\nFuel Type\n(.*)\n')
-    df['Mileage'] = df['Details'].str.extract(r'\nMileage \(ARAI\)\n(.*)\n')
-    df['Transmission'] = df['Details'].str.extract(r'\nTransmission\n(.*)\n')
-    df['Engine'] = df['Details'].str.extract(r'\nEngine\n(.*)\n')
+    # df['Fuel Type'] = df['Details'].str.extract(r'\nFuel Type\n(.*)\n')
+    # df['Mileage'] = df['Details'].str.extract(r'\nMileage \(ARAI\)\n(.*)\n')
+    # df['Transmission'] = df['Details'].str.extract(r'\nTransmission\n(.*)\n')
+    # df['Engine'] = df['Details'].str.extract(r'\nEngine\n(.*)\n')
 
-    df.drop('Details', axis=1, inplace=True)
+    # df.drop('Details', axis=1, inplace=True)
 
-    safety_features = df['Features'][0].split('\n\nSafety')[1].split(
-        '\nBraking & Traction')[0].split('\n')[2:-2:2]
-    braking_features = df['Features'][0].split('\n\nBraking & Traction')[
-        1].split('\nLocks & Security')[0].split('\n')[2:-2:2]
-    locks_features = df['Features'][0].split('\n\nLocks & Security')[1].split(
-        '\nComfort & Convenience')[0].split('\n')[2:-2:2]
-    comfort_features = df['Features'][0].split('\n\nComfort & Convenience')[
-        1].split('\nTelematics')[0].split('\n')[2:-2:2]
-    telematics_features = df['Features'][0].split('\n\nTelematics')[1].split(
-        '\nSeats & Upholstery')[0].split('\n')[2:-2:2]
-    seats_features = df['Features'][0].split('\n\nSeats & Upholstery')[
-        1].split('\nStorage')[0].split('\n')[2:-2:2]
-    storage_features = df['Features'][0].split('\n\nStorage')[1].split(
-        '\nDoors, Windows, Mirrors & Wipers')[0].split('\n')[2:-2:2]
-    doors_features = df['Features'][0].split('\n\nDoors, Windows, Mirrors & Wipers')[
-        1].split('\nExterior')[0].split('\n')[2:-2:2]
-    exterior_features = df['Features'][0].split(
-        '\n\nExterior')[1].split('\nLighting')[0].split('\n')[2:-2:2]
-    lighting_features = df['Features'][0].split('\n\nLighting')[1].split(
-        '\nInstrumentation')[0].split('\n')[2:-2:2]
-    instrumentation_features = df['Features'][0].split('\n\nInstrumentation')[1].split(
-        '\nEntertainment, Information & Communication')[0].split('\n')[2:-2:2]
-    entertainment_features = df['Features'][0].split('\n\nEntertainment, Information & Communication')[
-        1].split('\nManufacturer Warranty')[0].split('\n')[2:-2:2]
-    warranty_features = df['Features'][0].split('\n\nManufacturer Warranty')[
-        1].split('\n')[2:-2:2]
+    # safety_features = df['Features'][0].split('\n\nSafety')[1].split(
+    #     '\nBraking & Traction')[0].split('\n')[2:-2:2]
+    # braking_features = df['Features'][0].split('\n\nBraking & Traction')[
+    #     1].split('\nLocks & Security')[0].split('\n')[2:-2:2]
+    # locks_features = df['Features'][0].split('\n\nLocks & Security')[1].split(
+    #     '\nComfort & Convenience')[0].split('\n')[2:-2:2]
+    # comfort_features = df['Features'][0].split('\n\nComfort & Convenience')[
+    #     1].split('\nTelematics')[0].split('\n')[2:-2:2]
+    # telematics_features = df['Features'][0].split('\n\nTelematics')[1].split(
+    #     '\nSeats & Upholstery')[0].split('\n')[2:-2:2]
+    # seats_features = df['Features'][0].split('\n\nSeats & Upholstery')[
+    #     1].split('\nStorage')[0].split('\n')[2:-2:2]
+    # storage_features = df['Features'][0].split('\n\nStorage')[1].split(
+    #     '\nDoors, Windows, Mirrors & Wipers')[0].split('\n')[2:-2:2]
+    # doors_features = df['Features'][0].split('\n\nDoors, Windows, Mirrors & Wipers')[
+    #     1].split('\nExterior')[0].split('\n')[2:-2:2]
+    # exterior_features = df['Features'][0].split(
+    #     '\n\nExterior')[1].split('\nLighting')[0].split('\n')[2:-2:2]
+    # lighting_features = df['Features'][0].split('\n\nLighting')[1].split(
+    #     '\nInstrumentation')[0].split('\n')[2:-2:2]
+    # instrumentation_features = df['Features'][0].split('\n\nInstrumentation')[1].split(
+    #     '\nEntertainment, Information & Communication')[0].split('\n')[2:-2:2]
+    # entertainment_features = df['Features'][0].split('\n\nEntertainment, Information & Communication')[
+    #     1].split('\nManufacturer Warranty')[0].split('\n')[2:-2:2]
+    # warranty_features = df['Features'][0].split('\n\nManufacturer Warranty')[
+    #     1].split('\n')[2:-2:2]
 
-    all_features = safety_features + braking_features + locks_features + comfort_features + telematics_features + seats_features + \
-        storage_features + doors_features + exterior_features + lighting_features + \
-        instrumentation_features + entertainment_features + warranty_features
+    # all_features = safety_features + braking_features + locks_features + comfort_features + telematics_features + seats_features + \
+    #     storage_features + doors_features + exterior_features + lighting_features + \
+    #     instrumentation_features + entertainment_features + warranty_features
 
-    for feature in tqdm(all_features):
-        print(feature)
-        df[feature] = feature_extract(df, re.escape(feature))
-    df.drop('Features', axis=1, inplace=True)
+    # for feature in tqdm(all_features):
+    #     print(feature)
+    #     df[feature] = feature_extract(df, re.escape(feature))
+    # df.drop('Features', axis=1, inplace=True)
 
     # df.to_csv('car_data.csv', index=False)
     df.to_csv('data/output.csv', index=False)
