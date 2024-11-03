@@ -97,6 +97,7 @@ if __name__ == '__main__':
             data[brand] = {}
             cars = [a for a in WebDriverWait(driver, 10).until(ec.presence_of_all_elements_located(
                 (By.CSS_SELECTOR, 'a[class="o-cpnuEd o-SoIQT o-cJrNdO o-fzpilz"]')))]
+            logging.info(f"Found {len(cars)} cars for {brand}")
             cars_names = [car.text for car in cars]
             cars_links = [car.get_attribute('href') for car in cars]
             if cars_bar is None:
@@ -118,6 +119,7 @@ if __name__ == '__main__':
 
                     variants = [a for a in WebDriverWait(driver, 10).until(ec.presence_of_all_elements_located(
                         (By.CSS_SELECTOR, 'a[class="o-cJrNdO o-jjpuv o-cVMLxW"]')))]
+                    logging.info(f"Found {len(variants)} variants for {car[0]}")
                     variants_names = [variant.text for variant in variants]
                     variants_links = [variant.get_attribute(
                         'href') for variant in variants]
@@ -132,6 +134,8 @@ if __name__ == '__main__':
                             variants_bar.set_description(
                                 f'Variant: {variant[0]}')
                             driver.get(variant[1])
+                            logging.info(
+                                f"Processing brand: {brand}, car: {car[0]} and variant: {variant[0]}")
 
                             # try:
                             #     WebDriverWait(driver, 5).until(ec.presence_of_element_located(
@@ -141,7 +145,10 @@ if __name__ == '__main__':
                             for i in range(3):
                                 try:
                                     description = WebDriverWait(driver, 5).until(ec.presence_of_element_located(
-                                        (By.CSS_SELECTOR, 'div[data-lang-id="model_summary_content"]'))).text
+                                        (By.CSS_SELECTOR, 'div[data-lang-id="model_summary_content"]'))).get_attribute('innerText')
+                                    logging.info(
+                                        f"Description for brand: {brand}, car: {car[0]} and variant: {variant[0]}: {description}\n")
+                                    break
                                 except Exception as e:
                                     if i == 2:
                                         description = None
@@ -151,11 +158,14 @@ if __name__ == '__main__':
                             try:
                                 price = WebDriverWait(driver, 2).until(ec.presence_of_element_located(
                                     (By.CSS_SELECTOR, 'span[class="o-Hyyko o-bPYcRG o-eqqVmt"]'))).text
-
+                                logging.info(
+                                    f"Price for brand: {brand}, car: {car[0]} and variant: {variant[0]}: {price}\n")
                             except TimeoutException:
 
                                 price = WebDriverWait(driver, 2).until(ec.presence_of_element_located(
                                     (By.CSS_SELECTOR, 'span[class="o-eqqVmt o-Hyyko o-bPYcRG"]'))).text
+                                logging.info(
+                                    f"Price for brand: {brand}, car: {car[0]} and variant: {variant[0]}: {price}\n")
                             except Exception as e:
                                 price = None
                                 logging.error(f"Error in price for brand: {brand}, car: {car[0]} and variant: {variant[0]} | Message: \n{e}")
@@ -164,6 +174,8 @@ if __name__ == '__main__':
                             try:
                                 details = WebDriverWait(driver, 10).until(
                                     ec.presence_of_element_located((By.CSS_SELECTOR, 'div[data-index="0"]'))).get_attribute('innerText')
+                                logging.info(
+                                    f"Details for brand: {brand}, car: {car[0]} and variant: {variant[0]}: {details[:50]}...\n")
                             except Exception as e:
                                 details = None
                                 logging.error(f"Error in details for brand: {brand}, car: {car[0]} and variant: {variant[0]} | Message: \n{e}")
@@ -171,6 +183,8 @@ if __name__ == '__main__':
                             try:
                                 features = WebDriverWait(driver, 10).until(
                                     ec.presence_of_element_located((By.CSS_SELECTOR, 'div[data-index="1"]'))).get_attribute('innerText')
+                                logging.info(
+                                    f"Features for brand: {brand}, car: {car[0]} and variant: {variant[0]}: {features[:50]}...\n")
                             except Exception as e:
                                 features = None
                                 logging.error(f"Error in details for brand: {brand}, car: {car[0]} and variant: {variant[0]} | Message: \n{e}")
@@ -182,6 +196,8 @@ if __name__ == '__main__':
                                 'details': details,
                                 'features': features
                             }
+                            logging.info(
+                                f"Data for brand: {brand}, car: {car[0]} and variant: {variant[0]} collected")
                         except Exception as e:
                             data[brand][car[0]][variant[0]] = '?'
                             print(
