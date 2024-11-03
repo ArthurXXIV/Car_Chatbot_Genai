@@ -1,18 +1,33 @@
+from datetime import datetime
 import re
 import json
-import logging
+import sys
+from loguru import logger as logging
 import pandas as pd
 from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException
+
+def initialize_logger():
+# Add a console handler
+    logging.add(sys.stdout, level="DEBUG")
+
+    logger_format = "{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {file}:{line} | {message}"
+
+    # Add a log file handler
+    logging.add(
+        sys.stdout,
+        format=logger_format,
+        level="DEBUG",
+        enqueue=True,
+        catch=True
+    )
 
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
+initialize_logger()
 
 brands = [
     'maruti-suzuki-cars',
@@ -104,7 +119,7 @@ if __name__ == '__main__':
                         pass
 
                     variants = [a for a in WebDriverWait(driver, 10).until(ec.presence_of_all_elements_located(
-                        (By.CSS_SELECTOR, 'a[class="o-cJrNdO o-jjpuv o-cVMLxW "]')))]
+                        (By.CSS_SELECTOR, 'a[class="o-cJrNdO o-jjpuv o-cVMLxW"]')))]
                     variants_names = [variant.text for variant in variants]
                     variants_links = [variant.get_attribute(
                         'href') for variant in variants]
